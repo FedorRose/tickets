@@ -1,0 +1,51 @@
+{% extends 'main/index.html' %}
+
+{% block main %}
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="white-box">
+                    {% if tickets %}
+                    <h3 class="box-title">Задачи <a href="{% url 'new' %}" style="float:right; margin-right:2rem;">Новая задача</a></h3>
+                    <div class="table-responsive">
+                        <table class="table text-nowrap">
+                            <thead>
+                                <tr>
+                                    <th class="border-top-0">#</th>
+                                    <th class="border-top-0">Название</th>
+                                    <th class="border-top-0">Разработчик</th>
+                                    <th class="border-top-0">Приоритет</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            {% for ticket in tickets %}
+                                <tr>
+                                    <td><a href="{% url 'ticket' ticket.id %}">{{ticket.id}}</a></td>
+                                    <td><a href="{% url 'ticket' ticket.id %}">{{ticket.title}}</a></td>
+                                    <td><a href="{% url 'dev_tickets' ticket.developer.pk %}">{{ticket.developer}}</a></td>
+                                    <td>{{ticket.priority}}</td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    {% elif ticket %}
+
+                        <br><h3 class="box-title">{{ticket.title}}</h3><br>
+                        <h3 class="box-title">{{ticket.text}}</h3>
+                            <br><br><br><br>
+                            <h3 class="box-title">Добавил: {{ticket.author}}</h3>
+                            <h3 class="box-title">Назначена: {{ticket.developer}}</h3>
+                            <h3 class="box-title">Приоритет: {{ticket.priority}}</h3>
+                            <h3 class="box-title">Cтатус: {{ticket.status}}</h3>
+                            <h3 class="box-title">Добавлена: {{ticket.created_at}}</h3>
+
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+{% endblock %}

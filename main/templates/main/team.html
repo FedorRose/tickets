@@ -1,0 +1,23 @@
+{% extends 'main/index.html' %}
+
+{% block main %}
+    <div class="card white-box p-0">
+        <div class="card-heading">
+        </div>
+        <div class="card-body">
+            <ul class="chatonline">
+                {% for user in users %}
+                    <li>
+                        <a href="{% url 'dev_tickets' user.pk %}">
+                            <div class="ms-5">
+                                <span class="text-dark" style="font-size:1.8rem;">{{user.username}}
+                                    <small class="d-block text-success d-block" style="font-size:1.3rem;">{{user.first_name}}</small></span>
+                            </div>
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+    </div>
+
+{% endblock %}

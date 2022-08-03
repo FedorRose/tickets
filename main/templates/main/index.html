@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html dir="ltr" lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords"
+        content="wrappixel, admin dashboard, html css dashboard, web dashboard, bootstrap 5 admin, bootstrap 5, css3 dashboard, bootstrap 5 dashboard, Ample lite admin bootstrap 5 dashboard, frontend, responsive bootstrap 5 admin template, Ample admin lite dashboard bootstrap 5 dashboard template">
+    <meta name="description"
+        content="Ample Admin Lite is powerful and clean admin dashboard template, inpired from Bootstrap Framework">
+    <meta name="robots" content="noindex,nofollow">
+    <title>Тикеты</title>
+    <link rel="canonical" href="https://www.wrappixel.com/templates/ample-admin-lite/" />
+    <link rel="icon" type="image/png" sizes="16x16" href="plugins/images/favicon.png">
+   <link href="{% static 'main/css/style.min.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="preloader">
+        <div class="lds-ripple">
+            <div class="lds-pos"></div>
+            <div class="lds-pos"></div>
+        </div>
+    </div>
+
+    <div id="main-wrapper" data-layout="vertical" data-navbarbg="skin5" data-sidebartype="full"
+        data-sidebar-position="absolute" data-header-position="absolute" data-boxed-layout="full">
+        <aside class="left-sidebar" data-sidebarbg="skin6">
+            <div class="scroll-sidebar">
+                <nav class="sidebar-nav">
+                    <ul id="sidebarnav">
+                        <li class="sidebar-item pt-2">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'my_page' %}"
+                                aria-expanded="false">
+                                <span class="hide-menu" style="font-size: 1.5rem; margin-bottom: 10px;">Мои тикеты</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'tickets' %}"
+                                aria-expanded="false">
+                                <span class="hide-menu" style="font-size: 1.5rem; margin-bottom: 10px;">Все тикеты</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="{% url 'team' %}"
+                                aria-expanded="false">
+                                <span class="hide-menu" style="font-size: 1.5rem; margin-bottom: 10px;">Команда</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a class="sidebar-link waves-effect waves-dark sidebar-link" href="#"
+                                aria-expanded="false">
+                                <span class="hide-menu" style="font-size: 1.5rem; margin-bottom: 10px;">Документация</span>
+                            </a>
+                        </li>
+                    </ul>
+
+                </nav>
+            </div>
+        </aside>
+
+        <div class="page-wrapper">
+
+            <div class="page-breadcrumb bg-white">
+                <div class="row align-items-center">
+                    <div class="col-lg-3 col-md-4 col-sm-4 col-xs-12">
+                        <h2 class="page-title">{{title}} </h2>
+                    </div>
+                    <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12" style="height: 4rem;">
+                        <h4 style="float:right; margin-right:2rem; margin-top:1.2rem;">{{username}}</h4>
+                    </div>
+                </div>
+            </div>
+        {% block main %}
+        {% endblock %}
+        </div>
+    </div>
+
+    <script src="{% static 'main/plugins/bower_components/jquery/dist/jquery.min.js' %}"></script>
+    <script src="{% static 'main/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <script src="{% static 'main/js/app-style-switcher.js' %}"></script>
+    <script src="{% static 'main/js/waves.js' %}"></script>
+    <script src="{% static 'main/js/sidebarmenu.js' %}"></script>
+    <script src="{% static 'main/js/custom.js' %}"></script>
+</body>
+
+</html>
