@@ -43,7 +43,12 @@
                             <h3 class="box-title">Добавил: {{ticket.author}}</h3>
                             <h3 class="box-title">Назначена: {{ticket.developer}}</h3>
                             <h3 class="box-title">Приоритет: {{ticket.priority}}</h3>
-                            <h3 class="box-title">Cтатус: {{ticket.status}}</h3>
+                            <form method="post" action="{% url 'ticket' ticket.id %}">
+                                {%csrf_token%}
+                                <h3 class="box-title">Статус: {{ticket.status}}</h3>
+                                <div>{{form}}</div>
+                                <button type="submit">Изменить</button>
+                            </form>
                             <h3 class="box-title">Добавлена: {{ticket.created_at}}</h3>
 
                     {% endif %}

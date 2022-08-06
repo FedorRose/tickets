@@ -32,8 +32,16 @@ def ticket(request, pk=None):
     if request.user.is_authenticated:
         ticket = Ticket.objects.get(pk=pk)
         username = request.user
+        if request.method == 'POST':
+            form = Status(request.POST)
+            if form.is_valid():
+                ticket.status = form.cleaned_data['choice_field']
+                ticket.save()
+                return redirect('ticket', ticket.id)
+        else:
+            form = Status()
         return render(request, 'main/home.html', context={'ticket': ticket, 'title': "Тикет #{}".format(pk),
-                                                          'username': username})
+                                                          'username': username, 'form': form})
     else:
         return redirect('login')
 
