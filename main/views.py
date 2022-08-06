@@ -20,7 +20,7 @@ def my_page(request):
 
 def tickets(request):
     if request.user.is_authenticated:
-        tickets = Ticket.objects.all()
+        tickets = Ticket.objects.exclude(status='CLOSED')
         username = request.user
         return render(request, 'main/home.html', context={'tickets': tickets, 'title': "Все тикеты",
                                                           'username': username})
@@ -40,7 +40,7 @@ def ticket(request, pk=None):
 
 def team(request):
     if request.user.is_authenticated:
-        users = User.objects.filter(is_superuser=False)
+        users = User.objects.all()
         username = request.user
         return render(request, 'main/team.html', context={'title': "Наша команда", 'users': users,
                                                           'username': username})
@@ -73,6 +73,14 @@ def new(request):
         username = request.user
         return render(request, 'main/new.html', context={'form': form, 'title': "Новый тикет", 'username': username})
 
+    else:
+        return redirect('login')
+
+
+def closed_tickets(request):
+    if request.user.is_authenticated:
+        tickets = Ticket.objects.filter(status='CLOSED')
+        return render(request, 'main/home.html', context={'tickets': tickets, 'title': "Закрытые тикеты"})
     else:
         return redirect('login')
 

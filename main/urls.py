@@ -12,4 +12,5 @@ urlpatterns = [
     path('team/', team, name='team'),
     path('new/', new, name='new'),
     path('dev_tickets/<int:pk>/', dev_tickets, name='dev_tickets'),
+    path('closed_tickets/', closed_tickets, name='closed_tickets'),
 ]
