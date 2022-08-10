@@ -36,10 +36,12 @@ def ticket(request, pk=None):
             form = Status(request.POST)
             if form.is_valid():
                 ticket.status = form.cleaned_data['choice_field']
+                ticket.time = form.cleaned_data['time']
                 ticket.save()
                 return redirect('ticket', ticket.id)
         else:
-            form = Status()
+            form = Status({'ticket': ticket.time})
+            # form.time(instance=ticket.time)
         return render(request, 'main/home.html', context={'ticket': ticket, 'title': "Тикет #{}".format(pk),
                                                           'username': username, 'form': form})
     else:

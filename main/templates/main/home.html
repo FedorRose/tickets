@@ -46,7 +46,9 @@
                             <form method="post" action="{% url 'ticket' ticket.id %}">
                                 {%csrf_token%}
                                 <h3 class="box-title">Статус: {{ticket.status}}</h3>
-                                <div>{{form}}</div>
+                                <h3 class="box-title">Трудозатраты: {{ticket.time}}</h3>
+                                <div>{{form.choice_field}}</div>
+                                <div>{{form.time}}</div>
                                 <button type="submit">Изменить</button>
                             </form>
                             <h3 class="box-title">Добавлена: {{ticket.created_at}}</h3>

@@ -24,3 +24,4 @@ class Ticket(models.Model):
     developer = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, related_name='developer')
     priority = models.CharField(max_length=10, choices=PRIORITIES, default='NORMAL')
     status = models.CharField(max_length=30, choices=STATUSES, default='NEW')
+    time = models.PositiveIntegerField(default=0)
