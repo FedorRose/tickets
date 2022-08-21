@@ -26,4 +26,4 @@ class AddPostForm(forms.ModelForm):
 
 class Status(forms.Form):
     choice_field = forms.ChoiceField(choices=STATUSES, label="")
-    time = forms.IntegerField()
+    time = forms.IntegerField(required=False)

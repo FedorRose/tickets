@@ -9,7 +9,6 @@
                     {% if tickets %}
                     <h3 class="box-title">Задачи
                         <a href="{% url 'new' %}" style="float:right; margin-right:2rem;">Новая задача</a>
-                        <a href="{% url 'closed_tickets' %}" style="float:right; margin-right:73rem;">Закрытые задачи</a>
                     </h3>
                     <div class="table-responsive">
                         <table class="table text-nowrap">
@@ -46,7 +45,7 @@
                             <form method="post" action="{% url 'ticket' ticket.id %}">
                                 {%csrf_token%}
                                 <h3 class="box-title">Статус: {{ticket.status}}</h3>
-                                <h3 class="box-title">Трудозатраты: {{ticket.time}}</h3>
+                                <h3 class="box-title">Трудозатраты: {{ticket.time}} часов</h3>
                                 <div>{{form.choice_field}}</div>
                                 <div>{{form.time}}</div>
                                 <button type="submit">Изменить</button>

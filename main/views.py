@@ -7,10 +7,12 @@ from django.views.generic import CreateView
 from .forms import *
 from .models import *
 
+# OPEN_STATUSES = ('NEW', 'ASSIGNED-DEV', 'REVIEW-NEEDED', 'RESOLVED-DEV', )
+
 
 def my_page(request):
     if request.user.is_authenticated:
-        tickets = Ticket.objects.filter(developer=request.user)
+        tickets = Ticket.objects.filter(developer=request.user).exclude(status='CLOSED')
         username = request.user
         return render(request, 'main/home.html', context={'tickets': tickets, 'title': "Мои тикеты",
                                                           'username': username})
@@ -36,12 +38,12 @@ def ticket(request, pk=None):
             form = Status(request.POST)
             if form.is_valid():
                 ticket.status = form.cleaned_data['choice_field']
-                ticket.time = form.cleaned_data['time']
+                if form.cleaned_data['time']:
+                    ticket.time = ticket.time + int(form.cleaned_data['time'])
                 ticket.save()
                 return redirect('ticket', ticket.id)
         else:
             form = Status({'ticket': ticket.time})
-            # form.time(instance=ticket.time)
         return render(request, 'main/home.html', context={'ticket': ticket, 'title': "Тикет #{}".format(pk),
                                                           'username': username, 'form': form})
     else:
@@ -62,7 +64,7 @@ def dev_tickets(request, pk=None):
     if request.user.is_authenticated:
         dev = User.objects.get(pk=pk)
         username = request.user
-        tickets = Ticket.objects.filter(developer=dev)
+        tickets = Ticket.objects.exclude(status='CLOSED')
         return render(request, 'main/home.html', context={'title': "Тикеты ", 'tickets': tickets, 'username': username})
     else:
         return redirect('login')
