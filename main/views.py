@@ -64,7 +64,7 @@ def dev_tickets(request, pk=None):
     if request.user.is_authenticated:
         dev = User.objects.get(pk=pk)
         username = request.user
-        tickets = Ticket.objects.exclude(status='CLOSED')
+        tickets = Ticket.objects.filter(developer=dev).exclude(status='CLOSED')
         return render(request, 'main/home.html', context={'title': "Тикеты ", 'tickets': tickets, 'username': username})
     else:
         return redirect('login')
