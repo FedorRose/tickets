@@ -97,6 +97,13 @@ def closed_tickets(request):
         return redirect('login')
 
 
+def doc(request):
+    if request.user.is_authenticated:
+        return render(request, 'main/doc.html', context={'title': "Документация"})
+    else:
+        return redirect('login')
+
+
 class LoginUser(LoginView):
     form_class = LoginUserForm
     success_url = reverse_lazy('my_page')
