@@ -1,6 +1,6 @@
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django import forms
-from main.models import Ticket, STATUSES
+from main.models import *
 
 
 class LoginUserForm(AuthenticationForm):
@@ -25,5 +25,12 @@ class AddPostForm(forms.ModelForm):
 
 
 class Status(forms.Form):
-    choice_field = forms.ChoiceField(choices=STATUSES, label="")
-    time = forms.IntegerField(required=False)
+    choice_field = forms.ChoiceField(choices=STATUSES, label="", widget=forms.Select(attrs={'class': 'form-select'}))
+    time = forms.IntegerField(required=False, widget=forms.TextInput(attrs={'class': 'form-control'}))
+
+
+class CommentForm(forms.ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['text']
+        widgets = {'text': forms.Textarea(attrs={'rows': "5", 'class': "form-control form-control-lg"})}

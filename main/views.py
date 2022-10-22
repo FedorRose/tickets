@@ -32,20 +32,34 @@ def tickets(request):
 
 def ticket(request, pk=None):
     if request.user.is_authenticated:
-        ticket = Ticket.objects.get(pk=pk)
+        curr_ticket = Ticket.objects.get(pk=pk)
+        notes = Comment.objects.filter(ticket=curr_ticket)
         username = request.user
-        if request.method == 'POST':
-            form = Status(request.POST)
-            if form.is_valid():
-                ticket.status = form.cleaned_data['choice_field']
-                if form.cleaned_data['time']:
-                    ticket.time = ticket.time + int(form.cleaned_data['time'])
-                ticket.save()
-                return redirect('ticket', ticket.id)
-        else:
-            form = Status({'ticket': ticket.time})
-        return render(request, 'main/home.html', context={'ticket': ticket, 'title': "Тикет #{}".format(pk),
-                                                          'username': username, 'form': form})
+
+        if request.method == 'POST':  # обработка форм
+            if request.POST.get("form_type") == 'form_status':  # форма статуса и трудозатрат
+                form_status = Status(request.POST)
+                if form_status.is_valid():
+                    curr_ticket.status = form_status.cleaned_data['choice_field']
+                    if form_status.cleaned_data['time']:
+                        curr_ticket.time = curr_ticket.time + int(form_status.cleaned_data['time'])
+                    curr_ticket.save()
+                    return redirect('ticket', curr_ticket.id)
+            elif request.POST.get("form_type") == 'form_notes':  # форма комментариев
+                form = CommentForm(request.POST)
+                if form.is_valid():
+                    note = form.save(commit=False)
+                    note.dev = request.user
+                    note.ticket = curr_ticket
+                    note.save()
+                    return redirect('ticket', curr_ticket.id)
+
+        form_status = Status({'choice_field': curr_ticket.status})
+        form = CommentForm()
+
+        return render(request, 'main/home.html', context={'ticket': curr_ticket, 'title': "Тикет #{}".format(pk),
+                                                          'username': username, 'form_status': form_status,
+                                                          'form_notes': form, 'notes': notes})
     else:
         return redirect('login')
 

@@ -42,21 +42,51 @@
                             <h3 class="box-title">Добавил: {{ticket.author}}</h3>
                             <h3 class="box-title">Назначена: {{ticket.developer}}</h3>
                             <h3 class="box-title">Приоритет: {{ticket.priority}}</h3>
-                            <form method="post" action="{% url 'ticket' ticket.id %}">
-                                {%csrf_token%}
-                                <h3 class="box-title">Статус: {{ticket.status}}</h3>
+                            <h3 class="box-title">Статус: {{ticket.status}}</h3>
+                            {% if ticket.time < 5 %}
+                                <h3 class="box-title">Трудозатраты: {{ticket.time}} часа</h3>
+                            {% else %}
                                 <h3 class="box-title">Трудозатраты: {{ticket.time}} часов</h3>
-                                <div>{{form.choice_field}}</div>
-                                <div>{{form.time}}</div>
-                                <button type="submit">Изменить</button>
+                            {% endif %}
+                            <form method="post" action="{% url 'ticket' ticket.id %}" id="form_status" class="form-horizontal">
+                                {%csrf_token%}<input type="hidden" name="form_type" value="form_status">
+                                <div class="mb-3" style="width:20%;">
+                                    <div>{{form_status.choice_field}}</div>
+                                </div>
+                                <div class="mb-3" style="width:20%;">
+                                    <div>{{form_status.time}}</div>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Изменить</button>
                             </form>
                             <h3 class="box-title">Добавлена: {{ticket.created_at}}</h3>
-
                     {% endif %}
                 </div>
             </div>
         </div>
-
+        {% if ticket %}
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="white-box">
+                        {% for note in notes %}
+                            <div>
+                                <h3>{{ note.dev }} {{ note.created_at }}</h3>
+                                <h4>{{ note.text }}</h4>
+                            </div>
+                        {% endfor %}
+                        <br><br><br>
+                        <form method="post" action="{% url 'ticket' ticket.id %}" id="form_notes" class="form-horizontal">
+                            {%csrf_token%}<input type="hidden" name="form_type" value="form_notes">
+                            <div class="mb-6" style="width:60%;">
+                                {{ form_notes.text }}<br>
+                            </div>
+                            <div class="form-actions">
+                                <button type="submit" class="btn btn-primary" >Оставить запись</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
     </div>
 
 {% endblock %}
