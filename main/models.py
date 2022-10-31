@@ -12,6 +12,7 @@ STATUSES = (
     ('ASSIGNED-DEV', 'ASSIGNED-DEV'),
     ('REVIEW-NEEDED', 'REVIEW-NEEDED'),
     ('RESOLVED-DEV', 'RESOLVED-DEV'),
+    ('TESTING-NEEDED', 'TESTING-NEEDED'),
     ('CLOSED', 'CLOSED'),
 )
 
@@ -31,6 +32,9 @@ class Ticket(models.Model):
     status = models.CharField(max_length=30, choices=STATUSES, default='NEW')
     time = models.PositiveIntegerField(default=0)
     category = models.CharField(max_length=100, choices=CATS, null=True)
+
+    def __str__(self):
+        return self.title
 
 
 class Comment(models.Model):

@@ -18,6 +18,7 @@
                                     <th class="border-top-0">Название</th>
                                     <th class="border-top-0">Разработчик</th>
                                     <th class="border-top-0">Приоритет</th>
+                                    <th class="border-top-0">Категория</th>
                                     <th class="border-top-0">Статус</th>
                                 </tr>
                             </thead>
@@ -28,6 +29,7 @@
                                     <td><a href="{% url 'ticket' ticket.id %}">{{ticket.title}}</a></td>
                                     <td><a href="{% url 'dev_tickets' ticket.developer.pk %}">{{ticket.developer}}</a></td>
                                     <td>{{ticket.priority}}</td>
+                                    <td>{{ticket.category}}</td>
                                     <td>{{ticket.status}}</td>
                                 </tr>
                             {% endfor %}
