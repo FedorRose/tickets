@@ -8,7 +8,7 @@
                 <div class="white-box">
                     {% if tickets %}
                     <h3 class="box-title">Задачи
-                        <a href="{% url 'new' %}" style="float:right; margin-right:2rem;">Новая задача</a>
+                        <a href="{% url 'new' %}" style="color:#2996cc;float:right; margin-right:2rem;">Новая задача</a>
                     </h3>
                     <div class="table-responsive">
                         <table class="table text-nowrap">
@@ -39,12 +39,12 @@
                     {% elif ticket %}
 
                         <br><h3 class="box-title" style="font-size:1.5rem;">{{ticket.title}}</h3><br>
-                        <h3 class="box-title">{{ticket.text}}</h3>
+                        <div style="font-size:1.3rem;white-space: pre;">{{ticket.text}}</div>
                             <br><br><br><br>
-                            <h3 class="box-title">Добавил: {{ticket.author}}</h3>
-                            <h3 class="box-title">Назначена: {{ticket.developer}}</h3>
-                            <h3 class="box-title">Приоритет: {{ticket.priority}}</h3>
-                            <h3 class="box-title">Статус: {{ticket.status}}</h3>
+                            <h4><strong>Добавил: </strong>{{ticket.author}}</h4>
+                            <h4><strong>Назначена: </strong>{{ticket.developer}}</h4>
+                            <h4><strong>Приоритет: </strong>{{ticket.priority}}</h4>
+                            <h4><strong>Статус:  </strong>{{ticket.status}}</h4>
                             {% if ticket.time < 5 %}
                                 <h3 class="box-title">Трудозатраты: {{ticket.time}} часа</h3>
                             {% else %}
@@ -60,7 +60,8 @@
                                 </div>
                                 <button type="submit" class="btn btn-primary">Изменить</button>
                             </form>
-                            <h3 class="box-title">Добавлена: {{ticket.created_at}}</h3>
+                            <br>
+                            <h4>Добавлена: {{ticket.created_at}}</h4>
                     {% endif %}
                 </div>
             </div>
@@ -73,7 +74,7 @@
                             <div>
                                 <h3>{{ note.dev }} {{ note.created_at }}</h3>
                                 <h4>{{ note.text }}</h4>
-                            </div>
+                            </div><br>
                         {% endfor %}
                         <br><br><br>
                         <form method="post" action="{% url 'ticket' ticket.id %}" id="form_notes" class="form-horizontal">

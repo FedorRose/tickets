@@ -17,10 +17,11 @@ class RegisterUserForm(UserCreationForm):
 class AddPostForm(forms.ModelForm):
     class Meta:
         model = Ticket
-        fields = ['title', 'text', 'developer', 'priority', ]
+        fields = ['title', 'text', 'developer', 'priority', 'category', ]
         widgets = {
             'title': forms.TextInput(attrs={'class': "form-control p-0 border-0"}),
-            'text': forms.Textarea(attrs={'rows': "5", 'class': "form-control p-0 border-0"})
+            'text': forms.Textarea(attrs={'rows': "5", 'class': "form-control p-0 border-0",
+                                          'style': "white-space: pre-wrap;overflow-wrap: break-word;"})
         }
 
 
