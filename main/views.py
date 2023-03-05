@@ -9,15 +9,22 @@ from .models import *
 
 
 def my_page(request):
-    tickets = Ticket.objects.filter(developer=request.user).exclude(status='CLOSED')
+    tickets = Ticket.objects.filter(developer=request.user).exclude(status='CLOSED').order_by('-id')
     username = request.user
     return render(request, 'main/home.html', context={'tickets': tickets, 'title': "Мои тикеты", 'username': username})
 
 
 def tickets(request):
-    tickets = Ticket.objects.exclude(status='CLOSED')
+    tickets = Ticket.objects.exclude(status='CLOSED').order_by('-id')
     username = request.user
     return render(request, 'main/home.html', context={'tickets': tickets, 'title': "Все тикеты", 'username': username})
+
+
+def backlog(request, release):
+    tickets = Ticket.objects.exclude(status='CLOSED').filter(backlog=True, version=release).order_by('-id')
+    username = request.user
+    return render(request, 'main/home.html', context={'tickets': tickets, 'title': f'Backlog: Релиз {release}',
+                                                      'username': username})
 
 
 def ticket(request, pk=None):
@@ -61,7 +68,7 @@ def team(request):
 def dev_tickets(request, pk=None):
     dev = User.objects.get(pk=pk)
     username = request.user
-    tickets = Ticket.objects.filter(developer=dev).exclude(status='CLOSED')
+    tickets = Ticket.objects.filter(developer=dev).exclude(status='CLOSED').order_by('-id')
     return render(request, 'main/home.html', context={'title': "Тикеты ", 'tickets': tickets, 'username': username})
 
 
@@ -81,7 +88,7 @@ def new(request):
 
 
 def closed_tickets(request):
-    tickets = Ticket.objects.filter(status='CLOSED')
+    tickets = Ticket.objects.filter(status='CLOSED').order_by('-id')
     return render(request, 'main/home.html', context={'tickets': tickets, 'title': "Закрытые тикеты"})
 
 
